@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="PublishConfigData" serverName="eva" createEmptyFolders="true">
+    <serverData>
+      <paths name="Copy of project-level server 'eva' (2)">
+        <serverdata>
+          <mappings>
+            <mapping deploy="/var/www/eva" local="$PROJECT_DIR$" web="/" />
+          </mappings>
+        </serverdata>
+      </paths>
+      <paths name="eva">
+        <serverdata>
+          <mappings>
+            <mapping deploy="/var/www/eva" local="$PROJECT_DIR$" web="/" />
+          </mappings>
+          <excludedPaths>
+            <excludedPath path="/var/www/eva/migrations" />
+            <excludedPath path="/var/www/eva/venv" />
+          </excludedPaths>
+        </serverdata>
+      </paths>
+    </serverData>
+  </component>
+</project>
