@@ -46,7 +46,15 @@ class User(UserMixin, db.Model):
     # 在使用Flask-Login作为登入功能�?在user模型要继承UserMimix�?
     __tablename__ = 'users'
     id = db.Column(db.Integer, primary_key=True)
-    username = db.Column(db.String(64), unique=True)
+    name = db.Column(db.String(64), unique=True)
+    tel=db.Column(db.String(64))
+    arrangewant=db.Column(db.String(64))
+    arrange=db.Column(db.String(64))
+    premission=db.Column(db.Integer)
+    group=db.Column(db.Integer)
+    grade=db.Column(db.Integer)
+    exam=db.Column(db.Text)
+    time=db.Column(db.Integer)
     password_hash = db.Column(db.String(128))
     # real_name = db.Column(db.String(64), unique=True)
     # record = db.relationship('Record', backref='user')
@@ -102,6 +110,47 @@ class Category(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(64), unique=True)
     articles = db.relationship('Article', backref='category')
+
+
+#以下是内部管理部分的
+
+class Arrange(db.Model):
+    __tablename__='arrange'
+    card_id=db.Column(db.String(64),primary_key=True)
+    name=db.Column(db.String(64))
+    arrange=db.Column(db.String(64))
+    term=db.Column(db.Integer)
+
+class Exam(db.Model):
+    __tablename__ = 'exam'
+    Qid = db.Column(db.Integer, primary_key=True)
+    Stem = db.Column(db.Text)
+    Select_1 = db.Column(db.Text)
+    Select_2 = db.Column(db.Text)
+    Select_3 = db.Column(db.Text)
+    Select_4 = db.Column(db.Text)
+    Select_Right = db.Column(db.Integer)
+    lv = db.Column(db.Integer)
+
+class Marks_record(db.Model):
+   __tablename__ = 'marks_record'
+   id = db.Column(db.Integer, primary_key=True,autoincrement=True)
+   username=db.Column(db.String(64))
+   time=db.Column(db.DATETIME,default=datetime.utcnow())
+   Q_ID=db.Column(db.Integer)
+   Select=db.Column(db.String(64))
+   mark=db.Column(db.String(64))
+
+class Finance(db.Model):
+    __tablename__ = 'finance'
+    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    name = db.Column(db.String(64))
+    pm=db.Column(db.Integer)
+    num = db.Column(db.Integer)
+    tip = db.Column(db.Text)
+    remain = db.Column(db.Integer)
+
+
 
 @login_manager.user_loader
 def load_user(user_id):

@@ -1,10 +1,14 @@
 #-*- coding=utf-8 -*-
-from flask_wtf import FlaskForm
-from wtforms import StringField, SubmitField, TextAreaField
+from flask_wtf import Form
+from wtforms import StringField, SubmitField, TextAreaField,PasswordField
 from wtforms.validators import Required, length, Regexp
 
+class LoginForm(Form):
+    username = StringField(u'账号', validators=[Required(), length(1, 64)])
+    password = PasswordField(u'密码', validators=[Required()])
+    submit = SubmitField(u'登入')
 
-class AddComRecordForm(FlaskForm):
+class AddComRecordForm(Form):
     """
     用户提交维修记录的表单
     """
@@ -15,7 +19,7 @@ class AddComRecordForm(FlaskForm):
     computer_password = StringField(u'您的电脑密码（可不填）:')
     submit = SubmitField(u'提交')
 
-class AddEleRecordForm(FlaskForm):
+class AddEleRecordForm(Form):
     """
     用户提交维修记录的表单
     """
@@ -26,14 +30,14 @@ class AddEleRecordForm(FlaskForm):
     submit = SubmitField(u'提交')
 
 
-class GetRandomIdForm(FlaskForm):
+class GetRandomIdForm(Form):
     """
     序号相关的表单
     """
     random_id = StringField(u'请输入您的序列号：', validators=[Required()])
     submit = SubmitField(u'确认取回')
 
-class AddCommentForm(FlaskForm):
+class AddCommentForm(Form):
 
     comment = TextAreaField(u'* 填写你的表白:', validators=[Required(),length(1, 64)])
     submit = SubmitField(u'提交')

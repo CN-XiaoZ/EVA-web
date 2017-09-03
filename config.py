@@ -6,7 +6,7 @@
 '''
 
 class Config:
-    SECRET_KEY = '' #填入密钥
+    SECRET_KEY = 'aaa' #填入密钥
     SQLALCHEMY_COMMIT_ON_TEARDOWN = True
     SQLALCHEMY_TRACK_MODIFICATIONS = True
 
@@ -22,7 +22,7 @@ class Config:
 
 
 class DevelopmentConfig(Config):
-    SQLALCHEMY_DATABASE_URI = 'mysql://root:@localhost/eva?charset=utf8'
+    SQLALCHEMY_DATABASE_URI = 'mysql://root:340221zyc@localhost/zsj'
     # SQLALCHEMY链接数据库都是以URI方式格式�?mysql://账户�?密码@地址/数据库表�?
 
 config = {

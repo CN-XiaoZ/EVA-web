@@ -1,12 +1,48 @@
 #-*- coding=utf-8 -*-
-from flask import render_template, flash, redirect, url_for, request
+from flask import render_template, flash, redirect, url_for, request, session, make_response
 from . import main
-from .forms import AddCommentForm,AddComRecordForm, GetRandomIdForm,AddEleRecordForm
-from ..models import Record,Erecord,Unid,Comment,Article,Category
+from flask_login import login_required, current_user, login_user, logout_user
+from .forms import LoginForm,AddCommentForm,AddComRecordForm, GetRandomIdForm,AddEleRecordForm
+from ..models import Record,Erecord,Unid,Comment,Article,Category,User
 from .. import db
 from datetime import datetime
 import random
 import string
+from functools import wraps
+import sys
+
+def Public(func):#公用账号 权限号为2017
+    @wraps(func)
+    def ADMIN(*args, **kwargs):
+        PER = User.query.filter_by(name=session.get('name')).first()
+        if PER.permission==2017:
+            return func(*args, **kwargs)
+        else:
+            flash(u'你不是管理员')
+            return redirect(url_for('main.index'))
+    return ADMIN
+
+def Admin(func):#管理员账号 权限号为2008
+    @wraps(func)
+    def ADMIN(*args, **kwargs):
+        PER = User.query.filter_by(name=session.get('name')).first()
+        if PER.permission==2008:
+            return func(*args, **kwargs)
+        else:
+            flash(u'你不是管理员')
+            return redirect(url_for('main.index'))
+    return ADMIN
+
+def Su(func):#超级管理员账号 权限号为1984
+    @wraps(func)
+    def ADMIN(*args, **kwargs):
+        PER = User.query.filter_by(name=session.get('name')).first()
+        if PER.permission==1984:
+            return func(*args, **kwargs)
+        else:
+            flash(u'你不是管理员')
+            return redirect(url_for('main.index'))
+    return ADMIN
 
 
 @main.route('/')
@@ -137,6 +173,22 @@ def comment():
             except:
                 db.session.rollback()
     return render_template('main/comment.html', form=form)
+
+@main.route('/Innerlogin', methods=['GET', 'POST'])
+def login():
+    form = LoginForm()
+    if form.validate_on_submit():
+        session['name'] = form.username.data
+        user = User.query.filter_by(name=form.username.data).first()
+        if user is not None and user.verify_password(form.password.data):
+            login_user(user)
+            return redirect(request.args.get('next') or url_for('main.innerindex'))
+        flash(u'用户密码不正确')
+    return render_template('main/login.html', form=form)
+
+@main.route('/inner', methods=['GET'])
+def innerIndex():
+    return render_template('main/innerindex.html')
 
 @main.route('/read/', methods=['GET'])
 def read():
