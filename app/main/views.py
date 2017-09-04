@@ -2,7 +2,7 @@
 from flask import render_template, flash, redirect, url_for, request, session, make_response
 from . import main
 from flask_login import login_required, current_user, login_user, logout_user
-from .forms import LoginForm,AddCommentForm,AddComRecordForm, GetRandomIdForm,AddEleRecordForm
+from .forms import LoginForm,AddCommentForm,AddComRecordForm, GetRandomIdForm,AddEleRecordForm,ArrangeForm
 from ..models import Record,Erecord,Unid,Comment,Article,Category,User
 from .. import db
 from datetime import datetime
@@ -10,6 +10,8 @@ import random
 import string
 from functools import wraps
 import sys
+reload(sys)
+sys.setdefaultencoding('utf8')
 
 def Public(func):#公用账号 权限号为2017
     @wraps(func)
@@ -180,15 +182,13 @@ def login():
     if form.validate_on_submit():
         session['name'] = form.username.data
         user = User.query.filter_by(name=form.username.data).first()
+        session['id']=user.id
         if user is not None and user.verify_password(form.password.data):
             login_user(user)
-            return redirect(request.args.get('next') or url_for('main.innerindex'))
+            return redirect(request.args.get('next') or url_for('main.innerIndex'))
         flash(u'用户密码不正确')
     return render_template('main/login.html', form=form)
 
-@main.route('/inner', methods=['GET'])
-def innerIndex():
-    return render_template('main/innerindex.html')
 
 @main.route('/read/', methods=['GET'])
 def read():
@@ -198,3 +198,60 @@ def read():
     flash(u'未找到相关文章')
     return redirect(url_for('main.index'))
 
+
+@main.route('/inner', methods=['GET'])
+@login_required
+def innerIndex():
+    user = User.query.filter_by(id=session.get('id')).first()
+    group="Wrong"
+    if(user.group==1):
+        group="电脑部"
+    if (user.group == 2):
+        group = "电器部"
+    if (user.group == 3):
+        group = "文宣部"
+    if (user.group == 4):
+        group = "财外部"
+    if (user.group == 5):
+        group = "人资部"
+
+    return render_template('main/innerindex.html',
+                           name=user.name,
+                           tel=user.tel,
+                           group=group)
+
+
+@main.route('/inner/arrange', methods=['GET'])
+@login_required
+def arrange():
+    form=ArrangeForm()
+    if form.validate_on_submit():
+        arrange=form.arrange11.data+form.arrange12.data,\
+                form.arrange21.data+form.arrange22.data,\
+                form.arrange31.data+form.arrange32.data,\
+                form.arrange41.data+form.arrange42.data
+        user = User.query.filter_by(id=session.get('id')).first()
+        user.arrange=arrange
+        db.session.add(user)
+        db.session.commit()
+        flash(u'提交成功')
+    return render_template('main/arrange.html',form=form)
+
+
+@main.route('/inner/assign', methods=['GET'])
+def assign():
+    return render_template('main/innerindex.html')
+
+
+@main.route('/inner/arrangewant', methods=['GET'])
+def arrangewant():
+    return render_template('main/innerindex.html')
+
+
+@main.route('/inner/exper', methods=['GET'])
+def experience():
+    return render_template('main/innerindex.html')
+
+@main.route('/inner/fince', methods=['GET'])
+def fince():
+    return render_template('main/innerindex.html')

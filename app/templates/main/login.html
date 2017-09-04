@@ -2,14 +2,21 @@
 {% import "bootstrap/wtf.html" as wtf %}
 
 {% block page_content %}
-    <div class="col-md-6">
-        <h1>登入E志者内部管理系统</h1>
-        <hr>
-        {{ wtf.quick_form(form) }}
-        <br>
-        <hr>
-    </div>
-    <div class="col-md-6">
+     {% if current_user.is_authenticated %}
+        <div>
+            <h2>你已经登录 请点击下方按钮进入管理页面</h2>
+            <button class="btn btn-default">
+                <a href="{{ url_for('main.innerIndex') }}">进入</a>
+            </button>
+        </div>
+     {% else %}
+        <div class="col-md-6">
+            <h1>登入E志者内部管理系统</h1>
+            <hr>
+            {{ wtf.quick_form(form) }}
+            <br>
+            <hr>
+        </div>
+     {% endif %}
 
-    </div>
 {% endblock %}
