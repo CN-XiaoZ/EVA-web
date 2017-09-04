@@ -9,10 +9,10 @@
 				<li class="nav-header">
 					个人信息
 				</li>
-				<li class="active">
+				<li>
 					<a href="{{ url_for('main.innerIndex') }}">首页</a>
 				</li>
-				<li>
+				<li class="active">
 					<a href="{{ url_for('main.arrange') }}">排班</a>
 				</li>
 				<li>
@@ -37,23 +37,14 @@
 		<div class="col-md-9">
 			<div class="row">
 				<div >
-					<h2 class="title-thin text-muted">个人信息</h2>
+					<h2 class="title-thin text-muted">排班信息</h2>
 					<br/>
 				</div>
-
-                <div class="col-sm-6 clear-mrg">
-                    <dl>
-                        <dt class="text-upper">姓名</dt>
-                        <dd>{{ name }}</dd>
-						<br/>
-                        <dt class="text-upper">电话</dt>
-                        <dd>{{ tel }}</dd>
-						<br/>
-                        <dt class="text-upper">部门</dt>
-                        <dd>{{ group }}</dd>
-						<br/>
-                    </dl>
-                </div><!-- .col-sm-6 -->
+				<br/>
+				<div>
+					{{ wtf.quick_form(form) }}
+				</div>
+				<br/>
             </div>
 		</div>
 	</div>

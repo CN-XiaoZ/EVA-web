@@ -5,6 +5,9 @@ from flask_bootstrap import Bootstrap
 from flask_login import LoginManager
 from flask_pagedown import PageDown
 from config import config
+import sys
+reload(sys)
+sys.setdefaultencoding('utf8')
 
 db = SQLAlchemy()
 bootstrap = Bootstrap()
