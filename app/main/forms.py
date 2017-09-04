@@ -43,44 +43,44 @@ class AddCommentForm(Form):
     submit = SubmitField(u'提交')
 
 class ArrangeForm(Form):
-    arrange11= SelectField(u'第一意愿', choices=[(u'未选择','0'),
-                                                (u'星期一', '1'),
-                                                (u'星期二', '2'),
-                                                (u'星期三', '3'),
-                                                (u'星期四', '4'),
-                                                (u'星期五', '5'),
-                                                (u'星期六', '6'),
-                                                (u'星期日', '7')
+    arrange11= SelectField(u'第一意愿', choices=[ ('0',u'未选择'),
+                                                 ('1',u'星期一'),
+                                                 ('2',u'星期二'),
+                                                 ('3',u'星期三'),
+                                                 ('4',u'星期四'),
+                                                 ('5',u'星期五'),
+                                                 ('6',u'星期六'),
+                                                 ('7',u'星期日')
                                                 ], coerce=unicode)
-    arrange12= SelectField(u'',choices=[(u'未选择','0'),(u'第一班', '1'),(u'第二班', '2'),(u'第三班','3')], coerce=unicode)
-    arrange21= SelectField(u'第二意愿', choices=[(u'未选择','0'),
-                                                (u'星期一', '1'),
-                                                (u'星期二', '2'),
-                                                (u'星期三', '3'),
-                                                (u'星期四', '4'),
-                                                (u'星期五', '5'),
-                                                (u'星期六', '6'),
-                                                (u'星期日', '7')
+    arrange12= SelectField(u'',choices=[('0',u'未选择'),('1',u'第一班'),('2',u'第二班'),('3',u'第三班')], coerce=unicode)
+    arrange21= SelectField(u'第二意愿', choices=[ ('0',u'未选择'),
+                                                 ('1',u'星期一'),
+                                                 ('2',u'星期二'),
+                                                 ('3',u'星期三'),
+                                                 ('4',u'星期四'),
+                                                 ('5',u'星期五'),
+                                                 ('6',u'星期六'),
+                                                 ('7',u'星期日')
                                                 ], coerce=unicode)
-    arrange22= SelectField(u'',choices=[(u'未选择','0'),(u'第一班', '1'),(u'第二班', '2'),(u'第三班','3')], coerce=unicode)
-    arrange31= SelectField(u'第三意愿', choices=[(u'未选择','0'),
-                                                (u'星期一', '1'),
-                                                (u'星期二', '2'),
-                                                (u'星期三', '3'),
-                                                (u'星期四', '4'),
-                                                (u'星期五', '5'),
-                                                (u'星期六', '6'),
-                                                (u'星期日', '7')
+    arrange22= SelectField(u'',choices=[('0',u'未选择'),('1',u'第一班'),('2',u'第二班'),('3',u'第三班')], coerce=unicode)
+    arrange31= SelectField(u'第三意愿', choices=[ ('0',u'未选择'),
+                                                 ('1',u'星期一'),
+                                                 ('2',u'星期二'),
+                                                 ('3',u'星期三'),
+                                                 ('4',u'星期四'),
+                                                 ('5',u'星期五'),
+                                                 ('6',u'星期六'),
+                                                 ('7',u'星期日')
                                                 ], coerce=unicode)
-    arrange32= SelectField(u'',choices=[(u'未选择','0'),(u'第一班', '1'),(u'第二班', '2'),(u'第三班','3')], coerce=unicode)
-    arrange41= SelectField(u'第四意愿', choices=[(u'未选择','0'),
-                                                (u'星期一', '1'),
-                                                (u'星期二', '2'),
-                                                (u'星期三', '3'),
-                                                (u'星期四', '4'),
-                                                (u'星期五', '5'),
-                                                (u'星期六', '6'),
-                                                (u'星期日', '7')
+    arrange32= SelectField(u'',choices=[('0',u'未选择'),('1',u'第一班'),('2',u'第二班'),('3',u'第三班')], coerce=unicode)
+    arrange41= SelectField(u'第四意愿', choices=[ ('0',u'未选择'),
+                                                 ('1',u'星期一'),
+                                                 ('2',u'星期二'),
+                                                 ('3',u'星期三'),
+                                                 ('4',u'星期四'),
+                                                 ('5',u'星期五'),
+                                                 ('6',u'星期六'),
+                                                 ('7',u'星期日')
                                                 ], coerce=unicode)
-    arrange42= SelectField(u'',choices=[(u'未选择','0'),(u'第一班', '1'),(u'第二班', '2'),(u'第三班','3')], coerce=unicode)
+    arrange42= SelectField(u'',choices=[('0',u'未选择'),('1',u'第一班'),('2',u'第二班'),('3',u'第三班')], coerce=unicode)
     submit=SubmitField(u'提交')
