@@ -185,10 +185,24 @@ def login():
         session['id']=user.id
         if user is not None and user.verify_password(form.password.data):
             login_user(user)
-            return redirect(request.args.get('next') or url_for('main.innerIndex'))
+            if user.premission==1984:
+                return redirect(request.args.get('next') or url_for('main.SuIndex'))
+            if user.premission==2008:
+                return redirect(request.args.get('next') or url_for('main.AdminIndex'))
+            if user.premission==1:
+                return redirect(request.args.get('next') or url_for('main.innerIndex'))
         flash(u'用户密码不正确')
     return render_template('main/login.html', form=form)
 
+@main.route('/Adminindex', methods=['GET'])
+@Admin
+def AdminIndex():
+    return render_template('main/Adminindex.html')
+
+@main.route('/Suindex', methods=['GET'])
+@Su
+def Sundex():
+    return render_template('main/Suindex.html')
 
 @main.route('/read/', methods=['GET'])
 def read():
@@ -204,6 +218,32 @@ def read():
 def innerIndex():
     user = User.query.filter_by(id=session.get('id')).first()
     group="Wrong"
+    arrange="暂无安排"
+    if user.arrangewant=='00':
+        arrange="暂未安排"
+    day=user.arrangewant[0]
+    time=user.arrangewant[1]
+    if day=='1':
+        arrange="星期一"
+    if day=='2':
+        arrange="星期二"
+    if day=='3':
+        arrange="星期三"
+    if day=='4':
+        arrange="星期四"
+    if day=='5':
+        arrange="星期五"
+    if day=='6':
+        arrange="星期六"
+    if day=='7':
+        arrange="星期日"
+    if time=='1':
+        arrange=arrange+'第一班'
+    if time=='2':
+        arrange=arrange+'第二班'
+    if time=='3':
+        arrange=arrange+'第三班'
+
     if(user.group==1):
         group="电脑部"
     if (user.group == 2):
@@ -218,17 +258,18 @@ def innerIndex():
     return render_template('main/innerindex.html',
                            name=user.name,
                            tel=user.tel,
-                           group=group)
+                           group=group,
+                           arrange=arrange)
 
 
-@main.route('/inner/arrange', methods=['GET'])
+@main.route('/inner/arrange', methods=['GET','POST'])
 @login_required
 def arrange():
     form=ArrangeForm()
     if form.validate_on_submit():
-        arrange=form.arrange11.data+form.arrange12.data,\
-                form.arrange21.data+form.arrange22.data,\
-                form.arrange31.data+form.arrange32.data,\
+        arrange=form.arrange11.data+form.arrange12.data+' '+\
+                form.arrange21.data+form.arrange22.data+' '+\
+                form.arrange31.data+form.arrange32.data+' '+\
                 form.arrange41.data+form.arrange42.data
         user = User.query.filter_by(id=session.get('id')).first()
         user.arrange=arrange

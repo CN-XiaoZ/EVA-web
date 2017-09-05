@@ -2,7 +2,9 @@
 from flask_wtf import Form
 from wtforms import StringField, SubmitField, TextAreaField,PasswordField,SelectField
 from wtforms.validators import Required, length, Regexp
-
+import sys
+reload(sys)
+sys.setdefaultencoding('utf8')
 class LoginForm(Form):
     username = StringField(u'账号', validators=[Required(), length(1, 64)])
     password = PasswordField(u'密码', validators=[Required()])
@@ -51,8 +53,8 @@ class ArrangeForm(Form):
                                                  ('5',u'星期五'),
                                                  ('6',u'星期六'),
                                                  ('7',u'星期日')
-                                                ], coerce=unicode)
-    arrange12= SelectField(u'',choices=[('0',u'未选择'),('1',u'第一班'),('2',u'第二班'),('3',u'第三班')], coerce=unicode)
+                                                ])
+    arrange12= SelectField(u'',choices=[('0',u'未选择'),('1',u'第一班'),('2',u'第二班'),('3',u'第三班')])
     arrange21= SelectField(u'第二意愿', choices=[ ('0',u'未选择'),
                                                  ('1',u'星期一'),
                                                  ('2',u'星期二'),
@@ -61,8 +63,8 @@ class ArrangeForm(Form):
                                                  ('5',u'星期五'),
                                                  ('6',u'星期六'),
                                                  ('7',u'星期日')
-                                                ], coerce=unicode)
-    arrange22= SelectField(u'',choices=[('0',u'未选择'),('1',u'第一班'),('2',u'第二班'),('3',u'第三班')], coerce=unicode)
+                                                ])
+    arrange22= SelectField(u'',choices=[('0',u'未选择'),('1',u'第一班'),('2',u'第二班'),('3',u'第三班')])
     arrange31= SelectField(u'第三意愿', choices=[ ('0',u'未选择'),
                                                  ('1',u'星期一'),
                                                  ('2',u'星期二'),
@@ -71,8 +73,8 @@ class ArrangeForm(Form):
                                                  ('5',u'星期五'),
                                                  ('6',u'星期六'),
                                                  ('7',u'星期日')
-                                                ], coerce=unicode)
-    arrange32= SelectField(u'',choices=[('0',u'未选择'),('1',u'第一班'),('2',u'第二班'),('3',u'第三班')], coerce=unicode)
+                                                ])
+    arrange32= SelectField(u'',choices=[('0',u'未选择'),('1',u'第一班'),('2',u'第二班'),('3',u'第三班')])
     arrange41= SelectField(u'第四意愿', choices=[ ('0',u'未选择'),
                                                  ('1',u'星期一'),
                                                  ('2',u'星期二'),
@@ -81,6 +83,6 @@ class ArrangeForm(Form):
                                                  ('5',u'星期五'),
                                                  ('6',u'星期六'),
                                                  ('7',u'星期日')
-                                                ], coerce=unicode)
-    arrange42= SelectField(u'',choices=[('0',u'未选择'),('1',u'第一班'),('2',u'第二班'),('3',u'第三班')], coerce=unicode)
+                                                ])
+    arrange42= SelectField(u'',choices=[('0',u'未选择'),('1',u'第一班'),('2',u'第二班'),('3',u'第三班')])
     submit=SubmitField(u'提交')
