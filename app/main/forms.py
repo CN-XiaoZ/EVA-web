@@ -86,3 +86,7 @@ class ArrangeForm(Form):
                                                 ])
     arrange42= SelectField(u'',choices=[('0',u'未选择'),('1',u'第一班'),('2',u'第二班'),('3',u'第三班')])
     submit=SubmitField(u'提交')
+
+
+class doarrangeForm(Form):
+    arrangeGroup=SelectField(u'选择要进行排班的两届成员')

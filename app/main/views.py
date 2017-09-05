@@ -9,6 +9,7 @@ from datetime import datetime
 import random
 import string
 from functools import wraps
+from sqlalchemy import func
 import sys
 reload(sys)
 sys.setdefaultencoding('utf8')
@@ -17,7 +18,7 @@ def Public(func):#公用账号 权限号为2017
     @wraps(func)
     def ADMIN(*args, **kwargs):
         PER = User.query.filter_by(name=session.get('name')).first()
-        if PER.permission==2017:
+        if PER.premission==2017:
             return func(*args, **kwargs)
         else:
             flash(u'你不是管理员')
@@ -28,7 +29,7 @@ def Admin(func):#管理员账号 权限号为2008
     @wraps(func)
     def ADMIN(*args, **kwargs):
         PER = User.query.filter_by(name=session.get('name')).first()
-        if PER.permission==2008:
+        if PER.premission==2008:
             return func(*args, **kwargs)
         else:
             flash(u'你不是管理员')
@@ -39,7 +40,7 @@ def Su(func):#超级管理员账号 权限号为1984
     @wraps(func)
     def ADMIN(*args, **kwargs):
         PER = User.query.filter_by(name=session.get('name')).first()
-        if PER.permission==1984:
+        if PER.premission==1984:
             return func(*args, **kwargs)
         else:
             flash(u'你不是管理员')
@@ -194,15 +195,108 @@ def login():
         flash(u'用户密码不正确')
     return render_template('main/login.html', form=form)
 
+@main.route('/Adminindex/arrange', methods=['GET'])
+@Admin
+def doarrange():
+
+    return 0
+
+
 @main.route('/Adminindex', methods=['GET'])
 @Admin
 def AdminIndex():
-    return render_template('main/Adminindex.html')
+    user = User.query.filter_by(id=session.get('id')).first()
+    group = "Wrong"
+    arrange = "暂无安排"
+    if user.arrangewant == '00':
+        arrange = "暂未安排"
+    day = user.arrangewant[0]
+    time = user.arrangewant[1]
+    if day == '1':
+        arrange = "星期一"
+    if day == '2':
+        arrange = "星期二"
+    if day == '3':
+        arrange = "星期三"
+    if day == '4':
+        arrange = "星期四"
+    if day == '5':
+        arrange = "星期五"
+    if day == '6':
+        arrange = "星期六"
+    if day == '7':
+        arrange = "星期日"
+    if time == '1':
+        arrange = arrange + '第一班'
+    if time == '2':
+        arrange = arrange + '第二班'
+    if time == '3':
+        arrange = arrange + '第三班'
+
+    if (user.group == 1):
+        group = "电脑部"
+    if (user.group == 2):
+        group = "电器部"
+    if (user.group == 3):
+        group = "文宣部"
+    if (user.group == 4):
+        group = "财外部"
+    if (user.group == 5):
+        group = "人资部"
+
+    return render_template('main/innerindex.html',
+                           name=user.name,
+                           tel=user.tel,
+                           group=group,
+                           arrange=arrange)
 
 @main.route('/Suindex', methods=['GET'])
 @Su
-def Sundex():
-    return render_template('main/Suindex.html')
+def SuIndex():
+    user = User.query.filter_by(id=session.get('id')).first()
+    group = "Wrong"
+    arrange = "暂无安排"
+    if user.arrangewant == '00':
+        arrange = "暂未安排"
+    day = user.arrangewant[0]
+    time = user.arrangewant[1]
+    if day == '1':
+        arrange = "星期一"
+    if day == '2':
+        arrange = "星期二"
+    if day == '3':
+        arrange = "星期三"
+    if day == '4':
+        arrange = "星期四"
+    if day == '5':
+        arrange = "星期五"
+    if day == '6':
+        arrange = "星期六"
+    if day == '7':
+        arrange = "星期日"
+    if time == '1':
+        arrange = arrange + '第一班'
+    if time == '2':
+        arrange = arrange + '第二班'
+    if time == '3':
+        arrange = arrange + '第三班'
+
+    if (user.group == 1):
+        group = "电脑部"
+    if (user.group == 2):
+        group = "电器部"
+    if (user.group == 3):
+        group = "文宣部"
+    if (user.group == 4):
+        group = "财外部"
+    if (user.group == 5):
+        group = "人资部"
+
+    return render_template('main/innerindex.html',
+                           name=user.name,
+                           tel=user.tel,
+                           group=group,
+                           arrange=arrange)
 
 @main.route('/read/', methods=['GET'])
 def read():
@@ -281,11 +375,6 @@ def arrange():
 
 @main.route('/inner/assign', methods=['GET'])
 def assign():
-    return render_template('main/innerindex.html')
-
-
-@main.route('/inner/arrangewant', methods=['GET'])
-def arrangewant():
     return render_template('main/innerindex.html')
 
 
